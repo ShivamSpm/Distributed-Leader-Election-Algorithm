@@ -25,7 +25,7 @@ The interaction between clients and the server not only facilitates the basic op
 * **Server Component:** The server acts as the central coordinator. Upon startup, it waits for client connections, assigns them an ID, and listens to their messages. When a client sends an "alive" message, the server may initiate a leader election process if the conditions imply a need for a new leader (e.g., the disconnection of the current leader). The server uses a locking mechanism to ensure that the leader election process is synchronized across multiple threads, preventing race conditions and ensuring that the highest available client ID is chosen as the new leader.
 * **Concurrency:** Utilized ConcurrentHashMap for managing clients and ReentrantLock for handling synchronization during leader elections, ensuring thread safety.
 * **Communication:** Clients and server communicate via TCP sockets, with data sent in UTF format. This setup ensures reliable and ordered message delivery, which is critical for accurate leader elections.
-* 
+  
 -----------------------------------------
 
 ### Challenges Faced
@@ -38,3 +38,22 @@ The interaction between clients and the server not only facilitates the basic op
 -----------------------------------------
 
 ### Screenshots
+
+* `Client 0 connected to the server`
+  
+New leader is 0 as it is the only client connected
+
+![image](https://github.com/ShivamSpm/Distributed-Leader-Election-Algorithm/assets/43480557/67483c66-3c15-4563-882c-8ece9d5e7612)
+
+* `Client 1 connected`
+  
+  New leader is 1 as it is the highest id client
+  
+  ![image](https://github.com/ShivamSpm/Distributed-Leader-Election-Algorithm/assets/43480557/4b25e58e-3835-49e0-9669-2cee040b1d64)
+
+* `Client 2 was connected, becomes the leader, but gets disconnected`
+  
+  Client 1 alive message reaches the server, starts the election process and declares himself as the leader. It stays the leader as it has the highest id among all the clients connected.
+  
+![image](https://github.com/ShivamSpm/Distributed-Leader-Election-Algorithm/assets/43480557/1310b1c2-8a89-4324-97cc-2954c681d86e)
+
