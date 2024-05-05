@@ -24,7 +24,6 @@ public class Client {
                 }
             }).start();
 
-
             try {
                 while (!socket.isClosed()) {
                     String aliveMessage = "I am alive " + clientId;
